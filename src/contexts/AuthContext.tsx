@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState } from 'react';
 interface User {
   email: string;
   password: string;
+  isAdmin: boolean; // Propiedad para indicar si el usuario es administrador
 }
 
 // Define el contexto de autenticación
@@ -18,10 +19,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const isFirstUser = (): boolean => {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    return users.length === 0;
+  };
+
   const signIn = async (email: string, password: string) => {
     try {
       const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const existingUser = users.find((u: User) => u.email === email && u.password === password);
+      const existingUser = users.find(
+        (u: User) => u.email === email && u.password === password
+      );
       if (existingUser) {
         setUser(existingUser);
         setError(null);
@@ -41,7 +49,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (existingUser) {
         throw new Error('El usuario ya existe');
       } else {
-        const newUser = { email, password };
+        const newUser: User = {
+          email,
+          password,
+          isAdmin: isFirstUser(), // El primer usuario será administrador
+        };
         users.push(newUser);
         localStorage.setItem('users', JSON.stringify(users));
         setUser(newUser);

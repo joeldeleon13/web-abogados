@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { QuizSection } from '../components/QuizSection';
 import { QuizManager } from '../components/QuizManager';
 import { AuthForms } from '../components/AuthForms';
