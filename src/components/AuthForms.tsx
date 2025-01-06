@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { User, KeyReset } from 'lucide-react';
+import { User, Key } from 'lucide-react';
 
 interface AuthFormsProps {
   onSuccess?: () => void;
@@ -38,7 +38,7 @@ export const AuthForms = ({ onSuccess }: AuthFormsProps) => {
     return (
       <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
         <div className="flex justify-center mb-6">
-          <KeyReset className="h-12 w-12 text-indigo-600" />
+          <Key className="h-12 w-12 text-indigo-600" />
         </div>
         <h2 className="text-2xl font-bold text-center mb-6">
           Recuperar Contraseña
